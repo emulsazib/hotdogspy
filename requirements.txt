@@ -1,0 +1,30 @@
+# Core runtime
+click>=8.1,<9
+pydantic>=2.5,<3
+pyyaml>=6,<7
+python-dotenv>=1.0,<2
+requests>=2.31,<3
+
+# Module A - recon
+python-nmap>=0.7.1,<1
+
+# Module B - packet analysis
+scapy>=2.5,<3
+# pyshark is optional (needs tshark); imported lazily. Uncomment to enable live/tshark capture:
+# pyshark>=0.6
+
+# Web dashboard
+fastapi>=0.110,<1
+uvicorn[standard]>=0.27,<1
+jinja2>=3.1,<4
+
+# Reporting / PDF export
+reportlab>=4.0,<5
+
+# Optional LLM provider SDKs (imported lazily; install only what you use)
+# openai>=1.30
+# google-generativeai>=0.5
+# anthropic>=0.25
+
+# Dev / test
+pytest>=8,<9

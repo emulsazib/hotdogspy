@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Host wrapper so you can run `hotdogspy scan <ip>`, `hotdogspy report <ip>`,
+# `hotdogspy prompt "<text>"`, or just `hotdogspy` (interactive shell) against
+# the Dockerized tool — which already has nmap/tshark installed.
+#
+# Install once:
+#   chmod +x bin/hotdogspy
+#   sudo ln -sf "$(pwd)/bin/hotdogspy" /usr/local/bin/hotdogspy
+#
+# It routes into the running `hotdogspy` container when up; otherwise it starts a
+# one-off container (reports still land in ./data via the compose volume).
+set -euo pipefail
+
+CONTAINER="hotdogspy"
+
+# Locate the project dir (this script lives in <project>/bin/).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Interactive when attached to a TTY (so the shell / scope prompts work).
+TTY_FLAGS="-i"
+if [ -t 0 ] && [ -t 1 ]; then TTY_FLAGS="-it"; fi
+
+if docker ps --format '{{.Names}}' 2>/dev/null | grep -qx "$CONTAINER"; then
+  exec docker exec $TTY_FLAGS "$CONTAINER" hotdogspy "$@"
+else
+  echo "hotdogspy container not running; starting a one-off container..." >&2
+  exec docker compose -f "$PROJECT_DIR/docker-compose.yml" run --rm $TTY_FLAGS \
+    hotdogspy hotdogspy "$@"
+fi

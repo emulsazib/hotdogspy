@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HotDogSpy — Dashboard</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🛡️ HotDogSpy</h1>
+    <span class="subtitle">Defensive auditing dashboard</span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>New Scan</h2>
+      <form id="scan-form">
+        <label>Target (domain or IP)
+          <input name="target" placeholder="scanme.nmap.org" required />
+        </label>
+
+        <fieldset>
+          <legend>Modules</legend>
+          <label class="chk"><input type="checkbox" name="modules" value="recon" checked /> Recon (nmap)</label>
+          <label class="chk"><input type="checkbox" name="modules" value="packet" /> Packet analysis</label>
+          <label class="chk"><input type="checkbox" name="modules" value="sqli" /> SQL injection</label>
+        </fieldset>
+
+        <details>
+          <summary>Module options</summary>
+          <label>nmap profile <input name="profile" placeholder="default" /></label>
+          <label>PCAP path (packet) <input name="pcap" placeholder="data/samples/sample.pcap" /></label>
+          <label>Target URL (sqli) <input name="url" placeholder="http://host/item?id=1" /></label>
+          <label>Params (sqli, comma-sep) <input name="params" placeholder="id,name" /></label>
+        </details>
+
+        <label class="chk auth">
+          <input type="checkbox" name="authorized" />
+          I attest I am authorized to actively test this target (required for recon/sqli).
+        </label>
+
+        <button type="submit">Start scan</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Progress</h2>
+      <ul id="progress"></ul>
+    </section>
+
+    <section class="panel wide">
+      <h2>Report</h2>
+      <div id="summary" class="summary"></div>
+      <div id="report"></div>
+      <div id="downloads"></div>
+    </section>
+
+    <section class="panel wide">
+      <h2>History</h2>
+      <table id="history"><thead><tr><th>ID</th><th>Target</th><th>Modules</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audit-tool"
+version = "0.1.0"
+description = "Modular defensive security-audit framework with CLI and web dashboard"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Security Audit Tool" }]
+dependencies = [
+    "click>=8.1,<9",
+    "pydantic>=2.5,<3",
+    "pyyaml>=6,<7",
+    "python-dotenv>=1.0,<2",
+    "requests>=2.31,<3",
+    "python-nmap>=0.7.1,<1",
+    "scapy>=2.5,<3",
+    "fastapi>=0.110,<1",
+    "uvicorn[standard]>=0.27,<1",
+    "jinja2>=3.1,<4",
+    "reportlab>=4.0,<5",
+]
+
+[project.optional-dependencies]
+tshark = ["pyshark>=0.6"]
+openai = ["openai>=1.30"]
+gemini = ["google-generativeai>=0.5"]
+anthropic = ["anthropic>=0.25"]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+hotdogspy = "cli.main:cli"
+# Backwards-compatible alias.
+audit-tool = "cli.main:cli"
+
+[tool.setuptools.packages.find]
+include = ["audittool*", "cli*", "web*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.html", "*.js", "*.css"]

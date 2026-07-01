@@ -1,0 +1,21 @@
+# Authorized scope allowlist.
+#
+# SAFETY: Live network actions (nmap scanning, live packet capture, SQLi probing)
+# are only permitted against targets that resolve into this allowlist. Anything
+# outside it requires an explicit confirmation / attestation of authorization.
+#
+# By adding a target here you attest that you own it or are explicitly authorized
+# to test it. Unauthorized scanning may be illegal.
+
+# Attestation: set to true to acknowledge you are authorized to test the entries below.
+attested: false
+
+# Exact hostnames that are authorized.
+domains:
+  # - example.com
+  # - scanme.nmap.org        # nmap's official test target (uncomment to use)
+
+# Individual IPs or CIDR ranges that are authorized.
+networks:
+  # - 127.0.0.1
+  # - 192.168.0.0/24

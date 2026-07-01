@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nmaprun scanner="nmap" args="nmap -sV -sC -oX - scanme.example" start="1700000000" version="7.94">
+  <host>
+    <status state="up" reason="echo-reply"/>
+    <address addr="93.184.216.34" addrtype="ipv4"/>
+    <ports>
+      <port protocol="tcp" portid="22">
+        <state state="open" reason="syn-ack"/>
+        <service name="ssh" product="OpenSSH" version="8.9p1" method="probed"/>
+      </port>
+      <port protocol="tcp" portid="23">
+        <state state="open" reason="syn-ack"/>
+        <service name="telnet" method="probed"/>
+      </port>
+      <port protocol="tcp" portid="80">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="Apache httpd" version="2.4.52" method="probed"/>
+      </port>
+      <port protocol="tcp" portid="6379">
+        <state state="open" reason="syn-ack"/>
+        <service name="redis" product="Redis key-value store" version="6.2.6" method="probed"/>
+      </port>
+      <port protocol="tcp" portid="9999">
+        <state state="closed" reason="conn-refused"/>
+        <service name="unknown"/>
+      </port>
+    </ports>
+    <os>
+      <osmatch name="Linux 5.x" accuracy="95"/>
+    </os>
+  </host>
+</nmaprun>

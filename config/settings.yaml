@@ -1,0 +1,54 @@
+# Global settings for the Security Audit Tool.
+# Paths are resolved relative to the project root unless absolute.
+
+reports_dir: data/reports
+samples_dir: data/samples
+
+# ---- Module A: nmap recon ----
+recon:
+  # Named, safe scan profiles. Arguments are passed as an argv list to nmap
+  # (never through a shell). Choose with `--profile` on the CLI.
+  default_profile: default
+  profiles:
+    default:
+      arguments: "-sV -sC -T3"        # service + version + default scripts, polite timing
+      description: "Service/version detection with default NSE scripts."
+    quick:
+      arguments: "-F -T4"             # fast scan of the 100 most common ports
+      description: "Fast top-100-port sweep."
+    top-ports:
+      arguments: "-sV --top-ports 1000 -T3"
+      description: "Service detection on the top 1000 ports."
+  host_timeout_seconds: 300
+
+# ---- Module B: packet analysis ----
+packet:
+  # Protocols considered cleartext / high-risk when observed.
+  cleartext_ports: [21, 23, 25, 80, 110, 143, 8080]
+  # Live capture is OFF by default; pcap ingestion is the safe default.
+  allow_live_capture: false
+  live_capture_seconds: 15
+
+# ---- Module C: SQLi ----
+sqli:
+  # Prefer sqlmap REST API if reachable; otherwise use the built-in safe probes.
+  sqlmap_api_url: "http://127.0.0.1:8775"
+  request_timeout_seconds: 10
+  time_based_delay_seconds: 3      # baseline sleep used by time-based probes
+  max_requests_per_endpoint: 40    # conservative rate cap
+
+# ---- Module D: reporting / LLM ----
+reporting:
+  # Provider is auto-selected from available API keys unless pinned here.
+  # One of: auto | openai | gemini | anthropic | openai_compatible | stub
+  provider: auto
+  models:
+    openai: "gpt-4o"
+    gemini: "gemini-1.5-pro"
+    anthropic: "claude-sonnet-5"
+  # For OpenAI-compatible endpoints (Kimi, Qwen, local, etc.)
+  openai_compatible:
+    base_url: ""          # e.g. https://api.moonshot.cn/v1
+    model: ""             # e.g. moonshot-v1-8k
+  temperature: 0.2
+  max_output_tokens: 2000

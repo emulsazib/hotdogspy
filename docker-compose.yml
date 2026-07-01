@@ -1,0 +1,18 @@
+services:
+  hotdogspy:
+    build: .
+    image: hotdogspy:latest
+    container_name: hotdogspy
+    ports:
+      - "8000:8000"          # web dashboard -> http://localhost:8000
+    volumes:
+      - ./config:/app/config # edit scope.yaml / settings.yaml on the host
+      - ./data:/app/data     # persist generated reports + pcap samples
+    env_file:
+      - path: .env           # optional LLM API keys (copy from .env.example)
+        required: false
+    # NET_ADMIN/NET_RAW let nmap use raw-socket scan types from the container.
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
