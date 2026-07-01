@@ -1,9 +1,16 @@
-# Security Audit Tool
+# HotDogSpy — Security Audit Tool
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A modular, **defensive** security-audit framework with a CLI **and** a web dashboard.
 It resolves a target, runs network recon (nmap), analyzes packet captures for cleartext
 leaks, probes for SQL injection, aggregates findings into a structured JSON schema, and uses
 a pluggable LLM layer to produce prioritized remediation reports (Web / PDF / Markdown / JSON).
+
+**HotDogSpy is free and open source software, released under the [MIT License](LICENSE).**
+Anyone is welcome to use, modify, distribute, and contribute — see [Contributing](#contributing).
 
 > ⚠️ **Authorized use only.** Only run active scans against systems you own or are explicitly
 > authorized to test. Live actions are gated by an allowlist in `config/scope.yaml`.
@@ -129,3 +136,33 @@ Drop a `.py` file in `audittool/plugins/` that subclasses `ScannerPlugin` (or ex
 ```bash
 pytest -q
 ```
+
+## Contributing
+Contributions are welcome — bug reports, new scanner modules/plugins, provider adapters,
+docs, and tests. To get started:
+
+1. Fork the repo and create a feature branch (`git checkout -b feature/my-change`).
+2. Set up the dev environment and run the suite:
+   ```bash
+   python3 -m venv .venv && source .venv/bin/activate
+   pip install -r requirements.txt && pip install -e .
+   pytest -q
+   ```
+3. Keep changes focused, match the existing style, and add tests for new behavior.
+4. New scanners are easiest as plugins — see [Writing a plugin](#writing-a-plugin).
+5. Open a pull request describing the change and its motivation.
+
+Please keep the project's **defensive, authorized-use** posture: contributions should not add
+offensive capabilities or weaken the scope-enforcement / input-validation controls. By
+contributing you agree your work is licensed under the project's MIT License.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guidelines.
+
+## License
+HotDogSpy is open source under the **[MIT License](LICENSE)**, © 2026 **Emul Ahamed Sazib** —
+free to use, modify, and distribute, including commercially, with attribution. It is provided
+"as is", without warranty.
+
+> Note: "MIT License" is simply the name of a widely-used permissive open-source license and
+> does **not** imply any affiliation with the Massachusetts Institute of Technology. The
+> copyright is held solely by the author named above.

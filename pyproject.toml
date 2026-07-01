@@ -9,7 +9,7 @@ description = "Modular defensive security-audit framework with CLI and web dashb
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [{ name = "Security Audit Tool" }]
+authors = [{ name = "Emul Ahamed Sazib", email = "emul.sazib@gmail.com" }]
 dependencies = [
     "click>=8.1,<9",
     "pydantic>=2.5,<3",
